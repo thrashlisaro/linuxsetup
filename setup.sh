@@ -17,26 +17,27 @@ DISTRO="R"
 esac
 echo $PKMGR
 
-$PKMGR update -y
+$PKMGR update -yqq
 
-$PKMGR install libfuse-dev open-vm-tools open-vm-tools-desktop git -y
+$PKMGR install libfuse-dev open-vm-tools open-vm-tools-desktop git -yqq
 
 git clone https://github.com/KittyKatt/screenFetch.git
 cd screenFetch
 chmod +x screenfetch-dev
 mv screenfetch-dev /etc/screenfetch
+cd ..
+rm -rf screenFetch
 
-if $DISTRO = "U"
-then
-	$PKMGR install openssh-server sudo -y
+case "$DISTRO" in
+U)
+	$PKMGR install openssh-server sudo -yqq
 	echo  screenfetch >> /etc/bash.bashrc
 	echo "$USER	ALL=(ALL:ALL) ALL" >> /etc/sudoers
-
-elif $DISTRO ="R"
+;;
+R)
 	echo screenfetch >> /etc/bashrc
-then
-fi
-
+;;
+esac
 
 
 
